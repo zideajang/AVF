@@ -1,7 +1,8 @@
 import pygame
 
-from agent import BaseAgent
-from tile import Tile
+from src.agent import BaseAgent
+
+from src.tile import Tile
 
 class Level:
     def __init__(self,screen,tile_size,tmx_data):
@@ -12,11 +13,17 @@ class Level:
         self.tmx_data = tmx_data
         self.tile_size = tile_size
         self.screen = screen
-
+        self.user_proxy_agent = None
         self.create_map()
+
     def add_agent(self,agent:BaseAgent):
         agent.set_obstacle_sprites(self.obstacle_sprites)
         self.agents.add(agent)
+
+    def add_user_proxy_agent(self,agent:BaseAgent):
+        agent.set_obstacle_sprites(self.obstacle_sprites)
+        self.user_proxy_agent = agent
+    
         
 
     def create_map(self):
@@ -45,9 +52,14 @@ class Level:
     def update(self,dt):
         for agent in self.agents:
             agent.update()
+        if self.user_proxy_agent:
+            self.user_proxy_agent.update()
     def draw(self):
         self.visible_sprites.draw(self.screen)
         self.agents.draw(self.screen)
+        if self.user_proxy_agent:
+            self.user_proxy_agent.draw(self.screen)
+        
     def run(self,dt):
         self.update(dt)
         self.draw()

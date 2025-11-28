@@ -8,7 +8,7 @@ class Tile(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image:pygame.Surface = surf
         self.rect:pygame.Rect = self.image.get_rect(topleft=pos)
-        self.hitbox:pygame.Rect = self.rect.inflate(0,-10)
+        self.hitbox:pygame.Rect = self.rect.inflate(0,-26)
         # self.hitbox.y += 5
 
     def draw_debug(self,surface: pygame.Surface):
